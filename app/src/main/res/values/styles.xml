@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 1.设置自定义style属性：宽、高、字体大小、所在位置 -->
+    <style name="textview">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="CheckBox">
+        <!-- 导入 drawable 文件中的 check_box -->
+        <item name="android:button">@drawable/check_box</item>
+    </style>
+
+</resources>
