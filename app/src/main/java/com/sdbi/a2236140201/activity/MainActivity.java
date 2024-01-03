@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), UserCenterActivity.class);
                     intent.putParcelableArrayListExtra("LoginUser", list);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "登录失败，密码错误或账号不存在！", Toast.LENGTH_SHORT).show();
                 }

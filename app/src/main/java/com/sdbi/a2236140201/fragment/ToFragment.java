@@ -1,26 +1,33 @@
-package com.sdbi.a2236140201.activity;
+package com.sdbi.a2236140201.fragment;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.sdbi.a2236140201.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
-//收支记录页面业务逻辑
-public class SearchRecordActivity extends AppCompatActivity {
+public class ToFragment extends Fragment {
+
 
     ListView listView;
     //数据库
@@ -33,6 +40,7 @@ public class SearchRecordActivity extends AppCompatActivity {
     private static final String COLUMN_STATE = "state";
     private SQLiteDatabase sqLiteDatabase = null;
 
+
     private void selectData() {
         //自定义查询的sql语句
         String sql;
@@ -42,7 +50,7 @@ public class SearchRecordActivity extends AppCompatActivity {
         ArrayList<Map<String, String>> list = new ArrayList<>();
         if (cursor.getCount() == 0) {
             //查无数据则不显示列表
-            Toast.makeText(getApplicationContext(), "无数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "无数据", Toast.LENGTH_SHORT).show();
         } else {
             //查有数据则显示列表
             listView.setVisibility(View.VISIBLE);
@@ -62,7 +70,7 @@ public class SearchRecordActivity extends AppCompatActivity {
                 list.add(map);
             }
             //创建SimpleAdapter
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(),
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
                     list,
                     R.layout.record_item_layout,
                     new String[]{"id", "date", "type", "money", "state"},
@@ -72,19 +80,33 @@ public class SearchRecordActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_record);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_to, container, false);
         try {
             //打开数据库，如果是第一次会创建该数据库，模式为MODE_PRIVATE
-            sqLiteDatabase = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
+            sqLiteDatabase = requireActivity().openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
             //执行创建表的sql语句，虽然每次都调用，但只有首次才创建表
             //执行查询
-            listView = findViewById(R.id.searchlistview);//绑定列表
+            listView = view.findViewById(R.id.searchlistview);//绑定列表
             selectData();
         } catch (SQLException e) {
-            Toast.makeText(this, "数据库异常!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "数据库异常!", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+        return view;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        // hidden为true时当前fragment显示
+        if (hidden) {
+            selectData();
+        }else {
+            selectData();
+        }
+    }
+
 }

@@ -6,36 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".activity.UserCenterActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@mipmap/cats" />
-
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="100dp"
-        android:gravity="center"
-        android:textColor="#4F92CF"
-        android:textSize="24sp" />
-
-    <GridView
-        android:id="@+id/grid_view"
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_above="@id/main_bottom_nv"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_nv"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/white"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:verticalSpacing="120dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="-4dp"
-        android:numColumns="2" />
+        app:menu="@menu/navigation" />
 
 </RelativeLayout>

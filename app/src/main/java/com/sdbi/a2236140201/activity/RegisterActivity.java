@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
+                finish();
             } else {
                 Toast.makeText(getApplicationContext(), "您已经注册过此账户，请返回登录", Toast.LENGTH_SHORT).show();
             }
